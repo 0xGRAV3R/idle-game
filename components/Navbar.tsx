@@ -2,44 +2,61 @@ import { ConnectWallet, useAddress, useContract, useTokenBalance } from "@thirdw
 import { TOKEN_CONTRACT_ADDRESS } from "../constants/contracts";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import { useState } from "react";
 
 const Navbar = () => {
-    // Get the user's address
-    const address = useAddress();
+  // Get the user's address
+  const address = useAddress();
 
-    // Get instance of the token contract
-    // Get the user's token balance with address
-    const { contract: tokenContract } = useContract(TOKEN_CONTRACT_ADDRESS);
-    const { data: tokenBalance } = useTokenBalance(tokenContract, address);
+  // State for toggling the burger menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Truncate the number to 6 decimal places
-    const truncateNumber = (num: string) => {
-        return num.slice(0, 6);
-    }
+  // Get instance of the token contract
+  // Get the user's token balance with address
+  const { contract: tokenContract } = useContract(TOKEN_CONTRACT_ADDRESS);
+  const { data: tokenBalance } = useTokenBalance(tokenContract, address);
 
-    return (
-        <div className={styles.navbarContainer}>
-            {address && (
-                <>
-                    <h1>Payxn BSC Idle Game</h1>
-                    <div className={styles.navbarOptions}>
-                        <Link href="/">
-                            <p>Businesses</p>
-                        </Link>
-                        <Link href="/shop">
-                            <p>Shop</p>
-                        </Link>
-                    </div>
-                    <div className={styles.navbarOptions}>
-                        {tokenBalance && (
-                            <p>{truncateNumber(tokenBalance?.displayValue as string)} {tokenBalance?.symbol}</p>
-                        )}
-                        <ConnectWallet />
-                    </div>
-                </>
+  // Truncate the number to 6 decimal places
+  const truncateNumber = (num: string) => {
+    return num.slice(0, 6);
+  };
+
+  return (
+    <div className={styles.navbarContainer}>
+      {address && (
+        <>
+          <div className={styles.navbarHeader}>
+            <h1>Payxn BSC Idle Game</h1>
+            <button
+              className={styles.burgerMenu}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              ☰
+            </button>
+          </div>
+          <div
+            className={`${styles.navbarOptions} ${isMenuOpen ? styles.showMenu : styles.hideMenu}`}
+          >
+            <Link href="/">
+              <p>Businesses</p>
+            </Link>
+            <Link href="/shop">
+              <p>Shop</p>
+            </Link>
+          </div>
+          <div className={styles.navbarOptions}>
+            {tokenBalance && (
+              <p>
+                {truncateNumber(tokenBalance?.displayValue as string)}{" "}
+                {tokenBalance?.symbol}
+              </p>
             )}
-        </div>
-    )
+            <ConnectWallet />
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Navbar;
