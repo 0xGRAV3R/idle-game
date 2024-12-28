@@ -23,13 +23,16 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.main}>
-      <div style={{
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        flexDirection: "row",
-        width: "100%",
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          flexDirection: "column", // Changed to column to stack vertically
+          width: "100%",
+          gap: "20px", // Optional: Adds space between components
+        }}
+      >
         <Worker />
         <Businesses />
       </div>
@@ -44,7 +47,7 @@ export async function getServerSideProps(context: any) {
   const user = await getUser(context.req);
 
   // Redirect to login if not logged in
-  if(!user) {
+  if (!user) {
     return {
       redirect: {
         destination: "/login",
