@@ -26,7 +26,7 @@ const Navbar = () => {
       {address && (
         <>
           <div className={styles.navbarHeader}>
-            <h1>Payxn BSC Idle Game</h1>
+            <h2>Payxn BSC Idle Game</h2>
             <button
               className={styles.burgerMenu}
               onClick={() => setIsMenuOpen(!isMenuOpen)}

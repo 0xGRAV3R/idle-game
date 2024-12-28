@@ -101,7 +101,7 @@ const Login = () => {
 
     return (
         <div className={styles.container}>
-            <h1>Payxn BSC Idle Game Login</h1>
+            <h2>Payxn BSC Idle Game Login</h2>
             {showConnectEmbed && (
                 <ConnectEmbed
                     auth={{
